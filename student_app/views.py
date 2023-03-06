@@ -95,24 +95,24 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-# @api_view(['POST'])
-# def otplogin(request):
-#     if request.method == 'POST':
-#         twilio_key = os.getenv('twilio_key')
-#         phone = request.data["phone"]
-#         request.session['phone'] = phone
-#         # b=request.session.get(phone)
-#         # print(b,'b')
+@api_view(['POST'])
+def otplogin(request):
+    if request.method == 'POST':
+        twilio_key = os.getenv('twilio_key')
+        phone = request.data["phone"]
+        request.session['phone'] = phone
+        # b=request.session.get(phone)
+        # print(b,'b')
 
-#         if User.objects.filter(phone=phone).exists():
-#             totp= pyotp.TOTP('base32secret3232').now()
+        if User.objects.filter(phone=phone).exists():
+            totp= pyotp.TOTP('base32secret3232').now()
 
-#             client = Client("ACea1db142f98a1e87384255b29ee82e18",twilio_key)
-#             verification = client.verify \
-#                 .services("VA024fef6e8c95886f041a91ff57ee61ef") \
-#                 .verifications \
-#                 .create(to='+91'+phone, channel='sms')
-#             return Response("OTP sended successfully") 
+            client = Client("ACea1db142f98a1e87384255b29ee82e18",twilio_key)
+            verification = client.verify \
+                .services("VA024fef6e8c95886f041a91ff57ee61ef") \
+                .verifications \
+                .create(to='+91'+phone, channel='sms')
+            return Response("OTP sended successfully") 
 
 #         else:
 #             return Response("user not registered")
@@ -149,28 +149,28 @@ class MyTokenObtainPairView(TokenObtainPairView):
 # #         return Response("OTP sended successfully")  
 
 
-# @api_view(['POST'])
-# def otp_verify(request):
-#     twilio_key = os.getenv('twilio_key')
-#     otpp=123456
-#     otp=request.data['otp']
-#     print(otp,type(otp),"aotp")
-#     print("otpp",otp)
-#     phone_no= request.data['phone']
-#     print(phone_no,"phone_no")
-#     # phone_no=request.session.get('phone_no')
-#     client = Client('ACea1db142f98a1e87384255b29ee82e18',twilio_key)
-#     verification_check = client.verify \
-#         .services("VA024fef6e8c95886f041a91ff57ee61ef") \
-#         .verification_checks \
-#         .create(to='+91'+phone_no, code=otp)
-#     print(verification_check)
-#     if verification_check.status == "approved":
-#         print("171,hiii")
-#         user=User.objects.get(phone=phone_no)
-#         print(user)
-#         token_serializer = MyTokenObtainPairSerializer()
-#         token = token_serializer.get_token(user)
-#         response_data = {'access': str(token.access_token), 'refresh': str(token)}
-#         print(response_data)
-#         return Response(response_data)
+@api_view(['POST'])
+def otp_verify(request):
+    twilio_key = os.getenv('twilio_key')
+    otpp=123456
+    otp=request.data['otp']
+    print(otp,type(otp),"aotp")
+    print("otpp",otp)
+    phone_no= request.data['phone']
+    print(phone_no,"phone_no")
+    # phone_no=request.session.get('phone_no')
+    client = Client('ACea1db142f98a1e87384255b29ee82e18',twilio_key)
+    verification_check = client.verify \
+        .services("VA024fef6e8c95886f041a91ff57ee61ef") \
+        .verification_checks \
+        .create(to='+91'+phone_no, code=otp)
+    print(verification_check)
+    if verification_check.status == "approved":
+        print("171,hiii")
+        user=User.objects.get(phone=phone_no)
+        print(user)
+        token_serializer = MyTokenObtainPairSerializer()
+        token = token_serializer.get_token(user)
+        response_data = {'access': str(token.access_token), 'refresh': str(token)}
+        print(response_data)
+        return Response(response_data)
