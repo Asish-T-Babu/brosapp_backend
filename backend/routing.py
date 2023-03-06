@@ -25,12 +25,11 @@ application = ProtocolTypeRouter({
     "http": get_asgi_application(),
 
     # WebSocket chat handler
-    "websocket": AllowedHostsOriginValidator(
+    "websocket":
         AuthMiddlewareStack(
             URLRouter([
                path('ws/chat/<str:room_name>/<int:user_id>/', ChatConsumer.as_asgi()),
                path('ws/groupchat/<str:room_name>/<int:user_id>/', GroupChatConsumer.as_asgi()),
             ])
         )
-    ),
 })
