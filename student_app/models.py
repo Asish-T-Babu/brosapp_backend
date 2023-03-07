@@ -12,7 +12,7 @@ class Batch(models.Model):
 class Domain(models.Model):
     domain=models.CharField(max_length=10)
 
-class MyAccountManager(BaseUserManager,PermissionsMixin):
+class MyAccountManager(BaseUserManager):
     def create_user(self,phone, first_name, username,password=None):
         if not username:
             raise ValueError('User must have an username')
