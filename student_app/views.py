@@ -20,7 +20,8 @@ def user_register(request):
     if request.method == 'POST':
         data=request.data
         serialzer = UserSerializer(data=request.data,partial=True)
-        print(serialzer)
+        print(serialzer.is_valid())
+        print(serialzer.errors)
         if serialzer.is_valid():
             serialzer.save()
 
