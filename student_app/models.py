@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
+from django.contrib.auth.models import PermissionsMixin 
 # Create your models here.
 
 class Batch(models.Model):
@@ -11,7 +12,7 @@ class Batch(models.Model):
 class Domain(models.Model):
     domain=models.CharField(max_length=10)
 
-class MyAccountManager(BaseUserManager):
+class MyAccountManager(BaseUserManager,PermissionsMixin):
     def create_user(self,phone, first_name, username,password=None):
         if not username:
             raise ValueError('User must have an username')
