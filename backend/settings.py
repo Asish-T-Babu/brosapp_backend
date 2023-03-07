@@ -233,3 +233,5 @@ EMAIL_HOST_PASSWORD='nlegikkiigkdipej'
 EMAIL_USE_TLS=True
 
 twilio_key = os.getenv('twilio_key')
+
+CSRF_TRUSTED_ORIGINS = ["https://brosapp.xyz","https://www.brosapp.xyz"]
