@@ -26,7 +26,7 @@ def user_register(request):
             serialzer.save()
 
             print("hiii",data['username'],"&",data['email'])
-            celeryusing.delay(data['email'],data['username'])
+            # celeryusing.delay(data['email'],data['username'])
             return Response(serialzer.data, status=status.HTTP_201_CREATED)
         return Response(serialzer.errors, status=status.HTTP_400_BAD_REQUEST)
 
