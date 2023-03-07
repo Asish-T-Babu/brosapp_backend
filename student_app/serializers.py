@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
     user_manifest = ManifestSerializer(many=True)
     class Meta:
         model = User
-        fields = ['id','first_name','username','phone','email','password','is_superuser','user_manifest']
+        fields = ['id','first_name','username','phone','email','password','is_superuser','user_manifest','batch']
         extra_kwargs = {'password': {'write_only': True}}
     def create(self, validated_data):
         password = validated_data.pop('password',None)
