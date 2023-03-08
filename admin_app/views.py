@@ -186,6 +186,13 @@ def edit_week(request,id):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['DELETE'])
+def delete_week(request,id):
+    if request.method == 'DELETE':
+        posts = Manifest.objects.get(id=id)
+        posts.delete()
+        return Response(status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def view_advisor(request):
@@ -193,6 +200,19 @@ def view_advisor(request):
         posts = User.objects.filter(is_advisor=True).order_by('id')
         serialzer = AdminSerializer(posts, many=True)
         return Response(serialzer.data)
+
+@api_view(['PUT'])
+def update_advisor(request,id):
+    if request.method=='PUT':
+        print(request.data)
+        n={k:v for k,v in request.data.items() if v != 'undefined' and v != ''}
+        advisor=User.objects.get(id=id)
+        serializer = AdminSerializer(advisor,data=n,partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 def view_reviewer(request):
